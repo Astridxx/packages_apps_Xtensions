@@ -44,7 +44,6 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.fuelgauge.PowerUsageSummary;
 
-import com.android.internal.widget.LockPatternUtils;
 import com.xtended.support.preferences.SystemSettingSwitchPreference;
 import com.xtended.support.preferences.SystemSettingListPreference;
 
@@ -80,26 +79,16 @@ public class LockScreenSettings extends SettingsPreferenceFragment implements
         final PackageManager mPm = getActivity().getPackageManager();
         Resources resources = getResources();
 
-        mFingerprintUnlock = (SystemSettingSwitchPreference) findPreference(FP_KEYSTORE);
-
-        if (mFingerprintUnlock != null) {
-           if (LockPatternUtils.isDeviceEncryptionEnabled()) {
-               mFingerprintUnlock.setEnabled(false);
-               mFingerprintUnlock.setSummary(R.string.fp_encrypt_warning);
-            } else {
-               mFingerprintUnlock.setEnabled(true);
-               mFingerprintUnlock.setSummary(R.string.fp_unlock_keystore_summary);
-            }
-        }
-
         mFingerprintManager = (FingerprintManager) getActivity().getSystemService(Context.FINGERPRINT_SERVICE);
         mFingerprintErrorVib = (SwitchPreference) findPreference(FINGERPRINT_ERROR_VIB);
         mFingerprintVib = (SwitchPreference) findPreference(FINGERPRINT_VIB);
+        mFingerprintUnlock = (SystemSettingSwitchPreference) findPreference(FP_KEYSTORE);
         if (mPm.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT) &&
                  mFingerprintManager != null) {
             if (!mFingerprintManager.isHardwareDetected()){
                 prefScreen.removePreference(mFingerprintErrorVib);
                 prefScreen.removePreference(mFingerprintVib);
+                prefScreen.removePreference(mFingerprintUnlock);
             } else {
                 mFingerprintErrorVib.setChecked((Settings.System.getInt(getContentResolver(),
                         Settings.System.FINGERPRINT_ERROR_VIB, 1) == 1));
@@ -112,6 +101,7 @@ public class LockScreenSettings extends SettingsPreferenceFragment implements
         } else {
             prefScreen.removePreference(mFingerprintErrorVib);
             prefScreen.removePreference(mFingerprintVib);
+            prefScreen.removePreference(mFingerprintUnlock);
         }
 
         mFODIconPicker = (Preference) findPreference(FOD_ICON_PICKER_CATEGORY);
