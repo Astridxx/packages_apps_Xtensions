@@ -643,8 +643,7 @@
 
     <!-- Fingerprint unlock -->
     <string name="fp_unlock_keystore_title">Force FP authentication</string>
-    <string name="fp_unlock_keystore_summary">Unlock device with fingerprint after reboot or lockdown</string>
-    <string name="fp_encrypt_warning">Unlock device with fingerprint after reboot without PIN/Password/Pattern\nNote: You are encrypted so you can\'t use this feature.</string>
+    <string name="fp_unlock_keystore_summary">Unlock device with fingerprint after reboot without PIN/Password/Pattern\nNote: at your own risk!</string>
 
     <!-- Notifications general category -->
     <string name="notifications_general_category_title">General</string>
